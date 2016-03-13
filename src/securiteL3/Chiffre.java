@@ -37,11 +37,7 @@ public class Chiffre {
 					texte.append((char) c);
 			}
 			br.close();
-		} catch (
-
-		IOException exception)
-
-		{
+		} catch (IOException exception) {
 			exception.getStackTrace();
 			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
 		}
@@ -65,24 +61,24 @@ public class Chiffre {
 	}
 
 	public static StringBuilder removeAccentLower(StringBuilder source) {
-		return new StringBuilder(Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "")
-				.replaceAll("[^(a-z)]", "").toLowerCase());
+		return new StringBuilder(Normalizer.normalize(source, Normalizer.Form.NFD)
+				.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").replaceAll("[^(a-z)]", "").toLowerCase());
 	}
 
 	public static void main(String[] arg) {
 		if (arg.length < 3) {
-			System.out.println(arg.length);
-			System.out.println("Il manque des arguments");
+			System.err.println(arg.length);
+			System.err.println("Il manque des arguments");
 			return;
 		}
 		if (!arg[0].equals("p") && !arg[0].equals("c") && !arg[0].equals("v")) {
-			System.out.println(arg[0] + "Premier argument non reconnu");
+			System.err.println(arg[0] + "Premier argument non reconnu");
 			return;
 		}
 		String decalage = arg[1];
 		StringBuilder texte = lire(arg[2]);
 		if (texte == null) {
-			System.out.println("Le fichier est vide");
+			System.err.println("Le fichier est vide");
 			return;
 		}
 		firstArg(arg[0], decalage, lowerCase(texte));

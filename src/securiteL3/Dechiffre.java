@@ -68,25 +68,25 @@ public class Dechiffre {
 
 	public static void main(String[] arg) {
 		if (arg.length < 2) {
-			System.out.println(arg.length);
-			System.out.println("Il manque des arguments");
+			System.err.println(arg.length);
+			System.err.println("Il manque des arguments");
 			return;
 		}
 		if (!arg[0].equals("p") && !arg[0].equals("c") && !arg[0].equals("v")) {
-			System.out.println(arg[0] + "Premier argument non reconnu");
+			System.err.println(arg[0] + "Premier argument non reconnu");
 			return;
 		}
 		String method = arg[2];
 		StringBuilder texte = lire(arg[1]);
 		if (texte == null) {
-			System.out.println("Le fichier est vide");
+			System.err.println("Le fichier est vide");
 			return;
 		}
 		if (arg.length == 4) {
 			String mot = arg[3];
 			firstArg(arg[0], mot, lowerCase(texte), method);
 		} else {
-			firstArg(arg[0], null, lowerCase(texte), method);
+			firstArg(arg[0], null, lowerCase(removeAccentLower(texte)), method);
 		}
 	}
 }

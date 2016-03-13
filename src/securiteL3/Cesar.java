@@ -1,8 +1,10 @@
 package securiteL3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cesar implements Transcrire {
+	private ArrayList<String> listeMots;
 	private StringBuilder str;
 	private int decalage;
 	private int methode;
@@ -11,10 +13,20 @@ public class Cesar implements Transcrire {
 	public Cesar(StringBuilder str, String decalage) {
 		this.str = str;
 		this.decalage = Integer.parseInt(decalage) % 26;
+		this.listeMots = remplirListe("lexique.txt");
+		for(String mot : listeMots) 
+		//	System.out.println(mot);
+		if(isWordInListeMots(this.listeMots, "marcher")) {
+			System.out.println("le mot est present");
+		} 
 	}
 
 	public Cesar(StringBuilder str) {
 		this.str = str;
+		this.listeMots = remplirListe("lexique.txt");
+		if(isWordInListeMots(this.listeMots, "marcher")) {
+			System.out.println("le mot est present");
+		}
 	}
 
 	public void setMotTest(String i) {
@@ -23,22 +35,6 @@ public class Cesar implements Transcrire {
 
 	public void setMethode(int i) {
 		this.methode = i;
-	}
-
-	@Override
-	public StringBuilder chiffrer() {
-		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if (c >= 'a' && c <= 'z') {
-				c += decalage;
-				if (c > 'z')
-					c = (char) (c - 26);
-
-				str.setCharAt(i, (char) c);
-			}
-		}
-
-		return str;
 	}
 
 	public static String decale(String m, int decale) {
@@ -104,7 +100,7 @@ public class Cesar implements Transcrire {
 			String s = randomStr(strTemp.toString(), motTest);
 			if (s != null) {
 				System.out.println("string random : " + s);
-				correct = isInFile("lexique.txt", s);
+				//correct = isInFile("lexique.txt", s);
 			}
 			if (correct == true) {
 				return strTemp;
@@ -163,10 +159,26 @@ public class Cesar implements Transcrire {
 			while (str.charAt(i) != ' ') {
 				mot += str.charAt(i);
 			}
-			while (!isInFile("lexique.txt", (mot = decale(mot, decalage))) || (decalage <= 25)) {
+			while (!isWordInListeMots(this.listeMots, mot = decale(mot, decalage)) || (decalage <= 25)) {
 				decalage++;
 			}
 			str.append(mot);
+		}
+
+		return str;
+	}
+
+	@Override
+	public StringBuilder chiffrer() {
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c >= 'a' && c <= 'z') {
+				c += decalage;
+				if (c > 'z')
+					c = (char) (c - 26);
+
+				str.setCharAt(i, (char) c);
+			}
 		}
 
 		return str;

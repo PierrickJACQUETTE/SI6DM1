@@ -1,18 +1,16 @@
-package securiteL3;
-
-public class Vigenere<E> implements Transcrire {
-
-	@Override
-	public StringBuilder chiffrer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public StringBuilder dechiffrer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-}
+//package securiteL3;
+//
+//public class Vigenere<E> implements Transcrire<E> {
+//
+//	@Override
+//	public E chiffrer(E e) {
+//		return null;
+//	}
+//
+//	@Override
+//	public E dechiffrer(E e) {
+//		return null;
+//	}
+//
+//
+//}
