@@ -50,7 +50,7 @@ public interface Transcrire {
 			while ((line = reader.readLine()) != null) {
 				//System.out.println("line avec accent :" +line);
 				String stringNoAccent = Normalizer.normalize(line, Normalizer.Form.NFD)
-						.replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+						.replaceAll("[\u0300-\u036F]", "");
 				list.add(stringNoAccent);
 				//System.out.println("ligne sans accent : " + stringNoAccent);
 			}
