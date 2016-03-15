@@ -158,45 +158,48 @@ public class Cesar implements Transcrire {
 		return str;
 	}
 
-	public StringBuilder decryptageForceBrute() {
+	public String firstWorld(StringBuilder s) {
+		int i = 0;
 		String tmp = "";
-		boolean trouve = false;
-		int decalage = 0;
-		while (trouve == false && decalage < 26) {
-			int i = 0;
-			while (i < str.length() && trouve == false) {
-				if (str.charAt(i) != ' ') {
-					tmp += str.charAt(i);
-				} else {
-					System.out.println("le mot courrant est : "+tmp +" de dacalage : "+decalage);		
-					String sss=  decale(tmp, decalage);
-					System.out.println(sss);
-					if (isWordInListeMots(listeMots, sss)) {
-						StringBuilder s = dechiffrer(String.valueOf(decalage), str);
-						
-						if (mysplit(s,decalage)) {
-							System.out.println(str);
-							return s;
-						}
-					}
-					tmp = "";
+		while (i < s.length()) {
+			if (s.charAt(i) != ' ') {
+				tmp += s.charAt(i);
+			} else {
+				return tmp;
+			}
+			i++;
+		}
+		return tmp;
+	}
+
+	public StringBuilder decryptageForceBrute() {
+		int calculDecalage = 0;
+		String firstWorld = firstWorld(str);
+		while (calculDecalage < 26) {
+			String sss = decale(firstWorld, calculDecalage);
+			if (isWordInListeMots(listeMots, sss)) {
+				StringBuilder s = dechiffrer(String.valueOf(26-calculDecalage), new StringBuilder(str.toString()));
+				if (mysplit(s)) {
+					
+					return s;
 				}
-				i++;
 
 			}
-			decalage++;
+			calculDecalage++;
+
 		}
 		return null;
 	}
 
-	private boolean mysplit(StringBuilder s, int decalage) {
+	private boolean mysplit(StringBuilder s) {
 		String tmp = "";
 		for (int i = 0; i < s.length(); i++) {
-			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z'){
+			if (s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
 				tmp += s.charAt(i);
 			}
-			if (s.charAt(i) == ' ') {
-				if (!isWordInListeMots(listeMots, decale(tmp, decalage))) {
+			else if (s.charAt(i) == ' ') {
+				
+				if (!isWordInListeMots(listeMots,tmp)) {
 					return false;
 				}
 				tmp = "";
