@@ -14,19 +14,20 @@ public class Cesar implements Transcrire {
 		this.str = str;
 		this.decalage = Integer.parseInt(decalage) % 26;
 		this.listeMots = remplirListe("lexique.txt");
-		for(String mot : listeMots) 
-		//	System.out.println(mot);
-		if(isWordInListeMots(this.listeMots, "marcher")) {
-			System.out.println("le mot est present");
-		} 
+		// for(String mot : listeMots)
+		// System.out.println(mot);
+		/*
+		 * if(isWordInListeMots(this.listeMots, "marcher")) {
+		 * System.out.println("le mot est present"); }
+		 */
 	}
 
 	public Cesar(StringBuilder str) {
 		this.str = str;
 		this.listeMots = remplirListe("lexique.txt");
-		if(isWordInListeMots(this.listeMots, "marcher")) {
-			System.out.println("le mot est present");
-		}
+		// if(isWordInListeMots(this.listeMots, "durant")) {
+		// System.out.println("le mot est present");
+		//
 	}
 
 	public void setMotTest(String i) {
@@ -41,11 +42,18 @@ public class Cesar implements Transcrire {
 		String retour = "";
 		char newChar;
 		for (int i = 0; i < m.length(); i++) {
-			newChar = (char) (m.charAt(i) + decale);
+			newChar = (char) (m.charAt(i));
 			if (newChar >= 97 && newChar <= 122) {
-				retour += (char) newChar;
-			} else if (newChar > 122) {
-				newChar -= 26;
+				newChar =(char)(newChar+decale);
+				if (newChar > 122) {
+					newChar -= 26;
+					retour += newChar;
+				}
+				else{
+					retour += (char) newChar;
+				}
+			}
+			else{
 				retour += newChar;
 			}
 		}
@@ -53,19 +61,24 @@ public class Cesar implements Transcrire {
 		return retour;
 	}
 
-	public StringBuilder dechif(int currentDeca, StringBuilder strTemp) {
-		int deca = 26 - currentDeca;
+	@Override
+	public StringBuilder dechiffrer(String currentDeca, StringBuilder strTemp) {
+
+		int deca = 26 - Integer.parseInt(currentDeca);
 		for (int i = 0; i < strTemp.length(); i++) {
 			int c = strTemp.charAt(i);
-			if (c >= 97 && c <= 122) {
+			if (c >= 'a' && c <= 'z') {
 				c += deca;
-				if (c > 122) {
+				if (c > 'z') {
 					c = c - 26;
+				} else if (c < 'a') {
+					c = c + deca;
 				}
+				strTemp.setCharAt(i, (char) c);
+			} else {
 				strTemp.setCharAt(i, (char) c);
 			}
 		}
-
 		return strTemp;
 	}
 
@@ -73,7 +86,7 @@ public class Cesar implements Transcrire {
 		String test;
 		boolean correct = false;
 		boolean trouve = false;
-		int deca = 0;
+		String deca = "";
 		StringBuilder strTemp = new StringBuilder(str);
 		for (int i = 0; i < 25; i++) {
 			test = decale(motTest, i);
@@ -87,7 +100,7 @@ public class Cesar implements Transcrire {
 					if (k == test.length()) {
 						System.out.println("OK");
 						trouve = true;
-						deca = i;
+						deca += i;
 					}
 				}
 				j++;
@@ -95,12 +108,12 @@ public class Cesar implements Transcrire {
 		}
 		if (trouve = true) {
 			System.out.println("tente dechiffre");
-			strTemp = dechif(deca, strTemp);
+			strTemp = dechiffrer(deca, strTemp);
 			System.out.println(strTemp);
 			String s = randomStr(strTemp.toString(), motTest);
 			if (s != null) {
 				System.out.println("string random : " + s);
-				//correct = isInFile("lexique.txt", s);
+				// correct = isInFile("lexique.txt", s);
 			}
 			if (correct == true) {
 				return strTemp;
@@ -116,6 +129,7 @@ public class Cesar implements Transcrire {
 	// (analyse
 	// frequentielle inutile)
 	public StringBuilder decryptageFrequence() {
+		System.out.println(str);
 		int maxFreq = 0;
 		int freqChar = 0;
 		Character maxChar = new Character('a');
@@ -137,35 +151,58 @@ public class Cesar implements Transcrire {
 			}
 			freqTable.put(str.charAt(i), freqChar + 1);
 		}
+		int tmp = maxChar - tabFreq[0];
+		int decalage = (tmp < 'a') ? tmp : tmp + 26;
 
-		int decalage = maxChar - tabFreq[0];
-		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if (c >= 'a' && c <= 'z') {
-				if ((char) (c - decalage) < 'a')
-					str.setCharAt(i, (char) (c + 26 - decalage));
-				else
-					str.setCharAt(i, (char) (c - decalage));
-			}
-		}
-
+		str = dechiffrer(String.valueOf(decalage), str);
 		return str;
 	}
 
 	public StringBuilder decryptageForceBrute() {
-		String mot = "";
-		int decalage = 1;
-		for (int i = 0; i < str.length(); i++) {
-			while (str.charAt(i) != ' ') {
-				mot += str.charAt(i);
-			}
-			while (!isWordInListeMots(this.listeMots, mot = decale(mot, decalage)) || (decalage <= 25)) {
-				decalage++;
-			}
-			str.append(mot);
-		}
+		String tmp = "";
+		boolean trouve = false;
+		int decalage = 0;
+		while (trouve == false && decalage < 26) {
+			int i = 0;
+			while (i < str.length() && trouve == false) {
+				if (str.charAt(i) != ' ') {
+					tmp += str.charAt(i);
+				} else {
+					System.out.println("le mot courrant est : "+tmp +" de dacalage : "+decalage);		
+					String sss=  decale(tmp, decalage);
+					System.out.println(sss);
+					if (isWordInListeMots(listeMots, sss)) {
+						StringBuilder s = dechiffrer(String.valueOf(decalage), str);
+						
+						if (mysplit(s,decalage)) {
+							System.out.println(str);
+							return s;
+						}
+					}
+					tmp = "";
+				}
+				i++;
 
-		return str;
+			}
+			decalage++;
+		}
+		return null;
+	}
+
+	private boolean mysplit(StringBuilder s, int decalage) {
+		String tmp = "";
+		for (int i = 0; i < s.length(); i++) {
+			if(s.charAt(i) >= 'a' && s.charAt(i) <= 'z'){
+				tmp += s.charAt(i);
+			}
+			if (s.charAt(i) == ' ') {
+				if (!isWordInListeMots(listeMots, decale(tmp, decalage))) {
+					return false;
+				}
+				tmp = "";
+			}
+		}
+		return true;
 	}
 
 	@Override
@@ -184,8 +221,7 @@ public class Cesar implements Transcrire {
 		return str;
 	}
 
-	@Override
-	public StringBuilder dechiffrer() {
+	public StringBuilder decrypter() {
 		switch (methode) {
 		case 1:
 			return decryptageMot();

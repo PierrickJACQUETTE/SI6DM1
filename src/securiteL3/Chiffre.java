@@ -62,7 +62,7 @@ public class Chiffre {
 
 	public static StringBuilder removeAccentLower(StringBuilder source) {
 		return new StringBuilder(Normalizer.normalize(source, Normalizer.Form.NFD)
-				.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").replaceAll("[^(a-z)]", "").toLowerCase());
+				.replaceAll("\\p{InCombiningDiacriticalMarks}+", "").toLowerCase());
 	}
 
 	public static void main(String[] arg) {

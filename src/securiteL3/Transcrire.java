@@ -11,7 +11,7 @@ public interface Transcrire {
 
 	public StringBuilder chiffrer();
 
-	public StringBuilder dechiffrer();
+	public StringBuilder dechiffrer(String decalage, StringBuilder strp);
 
 	public default boolean isWordInListeMots(ArrayList<String> listeMots, String motATrouver) {
 		int firstCase = 0;
@@ -21,15 +21,9 @@ public interface Transcrire {
 
 		while (found == false && lastCase >= firstCase) {
 			middleCase = (lastCase + firstCase) / 2;
-			System.out.println("FIRST : " + firstCase);
-			System.out.println("LAST : " + lastCase);
-			System.out.println("middle : " + middleCase);
 			if (listeMots.get(middleCase).equals(motATrouver))
 				return true;
 			else {
-				System.out.println("middle case : " + listeMots.get(middleCase));
-				System.out.println("mot a trouver : " + motATrouver);
-				System.out.println("diff : " + listeMots.get(middleCase).compareTo(motATrouver));
 				if (listeMots.get(middleCase).compareTo(motATrouver) > 0)
 					lastCase = middleCase - 1;
 				else if (listeMots.get(middleCase).compareTo(motATrouver) < 0)
@@ -48,11 +42,9 @@ public interface Transcrire {
 			list = new ArrayList<String>();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				//System.out.println("line avec accent :" +line);
 				String stringNoAccent = Normalizer.normalize(line, Normalizer.Form.NFD)
 						.replaceAll("[\u0300-\u036F]", "");
 				list.add(stringNoAccent);
-				//System.out.println("ligne sans accent : " + stringNoAccent);
 			}
 			list.trimToSize();
 		} catch (Exception e) {
