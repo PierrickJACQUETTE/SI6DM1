@@ -9,6 +9,46 @@ public class Vigenere implements Transcrire {
 		this.str = str;
 		this.motCle = motCle;
 	}
+	
+	private int mostFreq(StringBuilder ciphertext) {
+        int[] nbLettre = new int[26];
+        int maxCount = 0;
+        char indexOfHighestCount = 0;
+        for (int i = 0; i < 26; i++) {
+        	nbLettre[i] = 0;
+        }
+        for (int i = 0; i < ciphertext.length(); i++) {
+            for (int j = 0; j < 26; j++) {
+                if (ciphertext.charAt(i) == (char)(j+'a')) {
+                	nbLettre[j] += 1;
+                    break;
+                }
+            }
+        }
+        for (char i = 0; i < 26; i++) {
+            if (nbLettre[i] > maxCount) {
+                indexOfHighestCount = i;
+                maxCount = nbLettre[i];
+            }
+        }
+        return indexOfHighestCount-4; // c'est e ? non faudrait chek dicto etc etc
+    }
+	
+	public StringBuilder decrypter(int longeur){
+		StringBuilder cle = new StringBuilder();
+		for(int i=0;i<longeur;i++){
+			StringBuilder tmp = new StringBuilder();
+			int current =i;
+			while(current<this.str.length()){
+				tmp.append(this.str.charAt(current));
+				current+=longeur;
+			}
+			int lettreMostFreq = mostFreq(tmp);
+			char res = (char)((lettreMostFreq+26)%26);
+			cle.append((char)('a'+res));
+		}
+		return this.dechiffrer("",new StringBuilder());
+	}
 
 	@Override
 	public StringBuilder chiffrer() {
@@ -35,8 +75,7 @@ public class Vigenere implements Transcrire {
 				}
 			}
 		}
-		this.str = resultat;
-		return resultat;
+		return this.str=resultat;
 	}
 
 	@Override
@@ -64,17 +103,17 @@ public class Vigenere implements Transcrire {
 				}
 			}
 		}
-		this.str = resultat;
-		return resultat;
+		return this.str=resultat;
 	}
-
+/*
 	public static void main(String[] args) {
-		StringBuilder perm = new StringBuilder("Durant la guerre des Gaules, Cesar eut l’idee de communiquer des messages secrets a ses allies. Sa maniere de coder les messages fait sourire aujourd’hui mais avec les Gaulois, il eut du succes… Voici sa technique : Le message a coder est en majuscules, par exemple « LE CIEL TOMBE ! », il peut comporter des espaces et des ponctuations. On ne code que les lettres (minuscules et majuscules), les autres caracteres restent inchanges. Cesar commence par choisir un nombre de l’intervalle [1,25], par exemple 3. Ce nombre sera le decalage. Il change chaque lettre du message par la lettre situee 3 crans plus loin dans l’alphabet. Par exemple, A devient D, et E devient H. Il obtient alors le message code « OH FLHO WRPEH ! ».");
-		StringBuilder deca = new StringBuilder("bal");
+		StringBuilder perm = new StringBuilder("chaque pays a ses traditions sa maniere de definir les droits et devoirs de chacun sa facon de commander de cooperer et de discuter notre culte sourcilleux de notre honneur nos distinctions entre le noble et le vil nous font vivre dans un univers bien different de celui ou on affronte une avidite du gain et une passion de honnete ou encore des prudentes demarchent qui conduisent les gens a accorder leurs volontes a discerner les ressorts de chaque culture on decouvre les moteurs des prises de decisions");
+		StringBuilder deca = new StringBuilder("untexteunpeulongcommeclefmaispasencoreassez");
 		Vigenere a = new Vigenere(perm, deca);
 		System.out.println(a.chiffrer());
-		System.out.println(a.dechiffrer("", perm));
+		//System.out.println(a.dechiffrer("", deca));
+		System.out.println(a.decrypter(deca.length()));
 
 	}
-
+*/
 }
