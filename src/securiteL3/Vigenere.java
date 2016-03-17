@@ -70,6 +70,7 @@ public class Vigenere implements Transcrire {
 						}
 					} else {
 						resultat.append(lettre);
+						j--;
 					}
 					if (j < this.motCle.length() - 1) {
 						i++;
@@ -98,6 +99,7 @@ public class Vigenere implements Transcrire {
 						}
 					} else {
 						resultat.append(lettre);
+						j--;
 					}
 					if (j < this.motCle.length() - 1) {
 						i++;
