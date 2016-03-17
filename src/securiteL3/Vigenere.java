@@ -48,6 +48,7 @@ public class Vigenere implements Transcrire {
 			char res = (char) ((lettreMostFreq + 26) % 26);
 			cle.append((char) ('a' + res));
 		}
+		this.motCle=cle;
 		return this.dechiffrer("", new StringBuilder());
 	}
 
