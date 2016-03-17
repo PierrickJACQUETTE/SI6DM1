@@ -5,10 +5,9 @@ public class Permutation implements Transcrire {
 	StringBuilder str;
 	StringBuilder perm;
 
-	Permutation(StringBuilder texte, StringBuilder permutation) {
+	public Permutation(StringBuilder texte, StringBuilder permutation) {
 		this.str = texte;
 		this.perm = permutation;
-
 	}
 
 	private boolean verifArg() {
@@ -49,24 +48,24 @@ public class Permutation implements Transcrire {
 			res[i] = 0;
 		}
 		int max = 0;
-		int compteur=0;
+		int compteur = 0;
 		for (int j = 0; j < res.length; j++) {
 			for (int i = 0; i < nb.length; i++) {
 				if (nb[i] > max) {
 					max = nb[i];
-					compteur=i;
+					compteur = i;
 				}
 			}
-			res[tabFreq[j]-97]=(char)(compteur+'a');
-			nb[compteur]=0;
-			max=0;
+			res[tabFreq[j] - 97] = (char) (compteur + 'a');
+			nb[compteur] = 0;
+			max = 0;
 		}
 		StringBuilder resultat = new StringBuilder();
-		for(int i=0;i<res.length;i++){
-//			System.out.println(i+ " :"+res[i]);
+		for (int i = 0; i < res.length; i++) {
+			// System.out.println(i+ " :"+res[i]);
 			resultat.append(res[i]);
 		}
-		this.perm=resultat;
+		this.perm = resultat;
 		return this.dechiffrer("", resultat);
 	}
 
@@ -97,18 +96,4 @@ public class Permutation implements Transcrire {
 		}
 		return this.str;
 	}
-
-	/*public static void main(String[] args) {
-		StringBuilder perm = new StringBuilder(
-				"chaque pays a ses traditions sa maniere de definir les droits et devoirs de chacun sa facon de commander de cooperer et de discuter notre culte sourcilleux de notre honneur nos distinctions entre le noble et le vil nous font vivre dans un univers bien different de celui ou on affronte une avidite du gain et une passion de honnete ou encore des prudentes demarchent qui conduisent les gens a accorder leurs volontes a discerner les ressorts de chaque culture on decouvre les moteurs des prises de decisions");
-		StringBuilder deca = new StringBuilder("qpoiuytrezanbvcxwmlkjhgfds");
-		Permutation a = new Permutation(perm, deca);
-		if (a.verifArg()) {
-			System.out.println(a.chiffrer());
-		//	System.out.println(a.dechiffrer("", perm));
-			System.out.println(a.decrypt());
-		}
-	}
-	*/
-
 }

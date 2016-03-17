@@ -14,20 +14,32 @@ public interface Transcrire {
 	public StringBuilder dechiffrer(String decalage, StringBuilder strp);
 
 	public default boolean isWordInListeMots(ArrayList<String> listeMots, String motATrouver) {
-		int firstCase = 0;
-		int lastCase = listeMots.size() - 1;
-		boolean found = false;
-		int middleCase = 0;
+		int firstCase = 1;
+		int lastCase = listeMots.size();
+		int middleCase;
+		System.out.println("frumentacé".compareTo("frumentacees"));
 
-		while (found == false && lastCase >= firstCase) {
+		while (lastCase >= firstCase) {
 			middleCase = (lastCase + firstCase) / 2;
-			if (listeMots.get(middleCase).equals(motATrouver))
+			System.out.println("middle case : "+listeMots.get(middleCase)+" case : "+middleCase);
+			if(lastCase == firstCase) {
+				System.out.println(listeMots.get(middleCase));
 				return true;
+			}
+			if (motATrouver.compareTo(listeMots.get(middleCase)) == 0) {
+				System.out.println(listeMots.get(middleCase));
+				return true;
+			}
 			else {
-				if (listeMots.get(middleCase).compareTo(motATrouver) > 0)
-					lastCase = middleCase - 1;
-				else if (listeMots.get(middleCase).compareTo(motATrouver) < 0)
+				System.out.println("mon mot : "+motATrouver+" middle : "+listeMots.get(middleCase));
+				System.out.println("diff : "+motATrouver.compareTo(listeMots.get(middleCase)));
+				if (motATrouver.compareTo(listeMots.get(middleCase)) > 0) {
 					firstCase = middleCase + 1;
+					System.out.println("first case : "+firstCase+" mot : "+listeMots.get(firstCase));
+				} else if (motATrouver.compareTo(listeMots.get(middleCase)) < 0) {
+					lastCase = middleCase - 1;
+					System.out.println("last case : "+lastCase+" mot : "+listeMots.get(lastCase));
+				} 
 			}
 		}
 
@@ -42,8 +54,8 @@ public interface Transcrire {
 			list = new ArrayList<String>();
 			String line;
 			while ((line = reader.readLine()) != null) {
-				String stringNoAccent = Normalizer.normalize(line, Normalizer.Form.NFD)
-						.replaceAll("[\u0300-\u036F]", "");
+				String stringNoAccent = Normalizer.normalize(line, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]",
+						"");
 				list.add(stringNoAccent);
 			}
 			list.trimToSize();

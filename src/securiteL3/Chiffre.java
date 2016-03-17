@@ -51,12 +51,16 @@ public class Chiffre {
 		case "c":
 			Cesar c = new Cesar(texte, decalage);
 			System.out.println(c.chiffrer());
+			break;
 		case "p":
-
+			Permutation p = new Permutation(texte, new StringBuilder(decalage));
+			System.out.println(p.chiffrer());
+			break;
 		case "v":
-
+			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
+			System.out.println(v.chiffrer());
+			break;
 		default:
-
 		}
 	}
 

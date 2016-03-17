@@ -1,7 +1,5 @@
 package securiteL3;
 
-
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +39,7 @@ public class decrypt {
 			exception.getStackTrace();
 			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
 		}
-		
+
 		return texte;
 	}
 
@@ -54,20 +52,23 @@ public class decrypt {
 				c.setMotTest(mot);
 
 			System.out.println(c.decrypter());
+			break;
 		case "p":
-
+			Permutation p = new Permutation(texte, new StringBuilder(mot));
+			System.out.println(p.decrypt());
+			break;
 		case "v":
-
+			Vigenere v = new Vigenere(texte, new StringBuilder(methode));
+			System.out.println(v.decrypter(Integer.parseInt(methode)));
+			break;
 		default:
 
 		}
-		
-		
 	}
 
 	public static StringBuilder removeAccentLower(StringBuilder source) {
-		return new StringBuilder(Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "")
-				.toLowerCase());
+		return new StringBuilder(
+				Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "").toLowerCase());
 	}
 
 	public static void main(String[] arg) {

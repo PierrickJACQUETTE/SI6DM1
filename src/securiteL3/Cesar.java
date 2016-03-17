@@ -16,18 +16,19 @@ public class Cesar implements Transcrire {
 		this.listeMots = remplirListe("lexique.txt");
 		// for(String mot : listeMots)
 		// System.out.println(mot);
-		/*
-		 * if(isWordInListeMots(this.listeMots, "marcher")) {
-		 * System.out.println("le mot est present"); }
-		 */
+		
+		  if(isWordInListeMots(this.listeMots, "beau")) {
+		  System.out.println("mot present"); }
+		  else System.out.println("tg");
 	}
 
 	public Cesar(StringBuilder str) {
 		this.str = str;
 		this.listeMots = remplirListe("lexique.txt");
-		// if(isWordInListeMots(this.listeMots, "durant")) {
-		// System.out.println("le mot est present");
-		//
+		 if(isWordInListeMots(this.listeMots, "fait")) 
+			 System.out.println("le mot est present");
+		 else System.out.println("tg");
+		
 	}
 
 	public void setMotTest(String i) {

@@ -21,15 +21,15 @@ public class Dechiffre {
 			br = new BufferedReader(ipsr);
 			int c;
 			while ((c = br.read()) != -1) {
-				if (c != '\n') {
+				if (c == '\n')
+					texte.append('\n');
+				else
 					texte.append((char) c);
-				}
 			}
 		} catch (IOException exception) {
 			exception.getStackTrace();
 			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
 		}
-		
 		return texte;
 	}
 
@@ -38,20 +38,23 @@ public class Dechiffre {
 		case "c":
 			Cesar c = new Cesar(texte);
 			System.out.println(c.dechiffrer(decalage,texte));
+			break;
 		case "p":
-
+			Permutation p = new Permutation(texte, new StringBuilder(decalage));
+			System.out.println(p.dechiffrer("ferfref", new StringBuilder("zef")));
+			break;
 		case "v":
-
+			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
+			System.out.println(v.dechiffrer("ferfref", new StringBuilder("zef")));
+			break;
 		default:
 
-		}
-		
-		
+		}	
 	}
 	
 	public static StringBuilder removeAccentLower(StringBuilder source) {
 		return new StringBuilder(Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "")
-				.replaceAll("[^(a-z)]", "").toLowerCase());
+				.toLowerCase());
 	}
 	
 	public static StringBuilder lowerCase(StringBuilder pText) {
