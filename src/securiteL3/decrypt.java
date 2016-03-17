@@ -54,7 +54,7 @@ public class decrypt {
 			System.out.println(c.decrypter());
 			break;
 		case "p":
-			Permutation p = new Permutation(texte, new StringBuilder(mot));
+			Permutation p = new Permutation(texte, new StringBuilder());
 			System.out.println(p.decrypt());
 			break;
 		case "v":
@@ -81,7 +81,10 @@ public class decrypt {
 			System.err.println(arg[0] + "Premier argument non reconnu");
 			return;
 		}
-		String method = arg[2];
+		String method =null;
+		if(arg.length==3){
+			method = arg[2];
+		}
 		StringBuilder texte = lire(arg[1]);
 		if (texte == null) {
 			System.err.println("Le fichier est vide");
