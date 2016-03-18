@@ -26,28 +26,35 @@ public class Vigenere implements Transcrire {
 			}
 		}
 		for (char i = 0; i < 26; i++) {
-			if (nbLettre[i] > maxCount) {
+			if (nbLettre[i] >= maxCount) {
 				indexOfHighestCount = i;
 				maxCount = nbLettre[i];
 			}
 		}
-		return indexOfHighestCount - 4; // c'est e ? non faudrait chek dicto etc
-										// etc
+		System.out.println("indexOfHighestCount"+ (indexOfHighestCount-4+26)%26);
+		return indexOfHighestCount - 4;
 	}
 
 	public StringBuilder decrypter(int longeur) {
 		StringBuilder cle = new StringBuilder();
+		StringBuilder travail = new StringBuilder();
+		for(int i=0;i<this.str.length();i++){
+			if(this.str.charAt(i)>='a'&&this.str.charAt(i)<='z'){
+				travail.append(this.str.charAt(i));
+			}
+		}
 		for (int i = 0; i < longeur; i++) {
 			StringBuilder tmp = new StringBuilder();
 			int current = i;
-			while (current < this.str.length()) {
-				tmp.append(this.str.charAt(current));
+			while (current < travail.length()) {
+				tmp.append(travail.charAt(current));
 				current += longeur;
 			}
 			int lettreMostFreq = mostFreq(tmp);
 			char res = (char) ((lettreMostFreq + 26) % 26);
 			cle.append((char) ('a' + res));
 		}
+		System.out.println(cle);
 		this.motCle=cle;
 		return this.dechiffrer("", new StringBuilder());
 	}
