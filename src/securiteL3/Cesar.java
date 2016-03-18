@@ -14,21 +14,12 @@ public class Cesar implements Transcrire {
 		this.str = str;
 		this.decalage = Integer.parseInt(decalage) % 26;
 		this.listeMots = remplirListe("lexique.txt");
-		// for(String mot : listeMots)
-		// System.out.println(mot);
-		
-		  if(isWordInListeMots(this.listeMots, "beau")) {
-		  System.out.println("mot present"); }
-		  else System.out.println("tg");
 	}
 
 	public Cesar(StringBuilder str) {
 		this.str = str;
 		this.listeMots = remplirListe("lexique.txt");
-		 if(isWordInListeMots(this.listeMots, "fait")) 
-			 System.out.println("le mot est present");
-		 else System.out.println("tg");
-		
+		System.out.println("mot : "+isWordInListeMots(listeMots, " "));
 	}
 
 	public void setMotTest(String i) {
@@ -84,45 +75,53 @@ public class Cesar implements Transcrire {
 	}
 
 	public StringBuilder decryptageMot() {
-		String test;
+		String test; 
 		boolean correct = false;
-		boolean trouve = false;
 		String deca = "";
 		StringBuilder strTemp = new StringBuilder(str);
-		for (int i = 0; i < 25; i++) {
-			test = decale(motTest, i);
+		// boucle for qui teste les codages du mot cle
+		for (int i = 0; i <= 25; i++) {
+			test = decale(motTest, i); // decale le motTest au decalage i
 			System.out.println(motTest + " = " + test);
-			int j = 0, k = 0;
-			System.out.println("Je rentre dans la whale");
-			while ((trouve != true) && (j < strTemp.length())) {
-				if (strTemp.charAt(j) == test.charAt(k)) {
-					System.out.println("test : " + k + " " + j);
-					k++;
-					if (k == test.length()) {
-						System.out.println("OK");
-						trouve = true;
-						deca += i;
+			int j = 0, k = 0, c = 0;
+			// boucle while qui regarde si le mot cle est present dans le texte
+			// s'arrete si trouve = true ou si on a atteint la fin du texte
+			while (j < strTemp.length()) {
+				// regarde si le charactere courrant est dans l'alphabet
+ 				if(strTemp.charAt(j) > 'a' && strTemp.charAt(j) < 'z'){
+ 					c++;
+ 					// teste si le char current est = au char correcpondant au mot cle
+ 					// et regarde si le mot c n'est pas plus grand que le mot cle
+					if (strTemp.charAt(j) == test.charAt(k) && !(c>test.length())) {
+						k++;
+						System.out.println("test : " + k + " " + j+" "+ c);
+						// teste si le mots en traitement est aussi long que le mot cle
+						if (k == test.length() && k == c) {
+							deca += i; // current decalage de teste
+							strTemp = dechiffrer(deca, strTemp); // dechiffre le texte
+							System.out.println(strTemp);
+							correct = mysplit(strTemp); // teste si le teste est en francais
+							if(correct == true) {
+								return strTemp; // retourne le texte correct
+							}
+							else{
+								// remete le texte de test au texte crypter
+								// et le decalage de teste a ""
+								strTemp = str; 
+								deca = "";
+								break;
+							}
+						}
 					}
+				}
+				else{
+					// si on catch un separateur remets la taille du mot courant a 0;
+					c = 0;
+					k = 0;
 				}
 				j++;
 			}
 		}
-		if (trouve = true) {
-			System.out.println("tente dechiffre");
-			strTemp = dechiffrer(deca, strTemp);
-			System.out.println(strTemp);
-			String s = randomStr(strTemp.toString(), motTest);
-			if (s != null) {
-				System.out.println("string random : " + s);
-				// correct = isInFile("lexique.txt", s);
-			}
-			if (correct == true) {
-				return strTemp;
-			} else {
-				System.err.println("Votre cle n'est pas bonne");
-			}
-		}
-
 		return null;
 	}
 
@@ -135,31 +134,44 @@ public class Cesar implements Transcrire {
 		int freqChar = 0;
 		Character maxChar = new Character('a');
 		char[] tabFreq = { 'e', 'a', 's', 'i', 't', 'n', 'r', 'u', 'l', 'o', 'd', 'c', 'p', 'm', 'v', 'q', 'f', 'b',
-				'g', 'h', 'j', 'x', 'y', 'z', 'w', 'k' };
+				'g', 'h', 'j', 'x', 'y', 'z', 'w', 'k' }; // tableau des frequences classe par ordre decroissant
 		HashMap<Character, Integer> freqTable = new HashMap<Character, Integer>();
 		for (Character i = 97; i <= 122; i++) {
-			freqTable.put(i, 0);
+			freqTable.put(i, 0); // initialise la hastable a une valeur 0 pour chaque cle
 		}
 
+		// boucle for qui regarde quel est le caractere le plus present dans le texte
 		for (int i = 0; i < str.length(); i++) {
 			if (str.charAt(i) >= 'a' && str.charAt(i) <= 'z')
 				freqChar = freqTable.get(str.charAt(i));
-
-			if (maxFreq <= freqChar) { // si plusieurs lettre apparaissent un
+			if (maxFreq <= freqChar) { 	// si plusieurs lettre apparaissent un
 										// meme nombre maximum de fois ?
 				maxFreq = freqChar;
 				maxChar = str.charAt(i);
 			}
 			freqTable.put(str.charAt(i), freqChar + 1);
 		}
-		int tmp = maxChar - tabFreq[0];
-		int decalage = (tmp < 'a') ? tmp : tmp + 26;
-
-		str = dechiffrer(String.valueOf(decalage), str);
-		return str;
+		
+		/* 
+		 * boucle for qui permet de tester pour le caractere le plus frequents
+		 * son codage par rapport au tableau des frequences
+		 */
+		for(int i = 0; i < 26; i++){
+			int tmp = maxChar-tabFreq[i]; //decalage par rapport a tabFreq (peut etre negatif)
+			// decalage final corrige si il est negatif  
+			int decalage = ((tmp+97) < 'a') ? (tmp+26) : tmp ;
+			// dechiffre le texte par rapport a decalage
+			StringBuilder strTemp =new StringBuilder(dechiffrer(String.valueOf(decalage), str));
+			// teste pour savoir si le texte dechiffre est correct (strTemp)
+			if(mysplit(strTemp)){ 
+				// si c'est bon renvoie le texte dechiffre (strTemp)
+				return strTemp;
+			}
+		}
+		return null;
 	}
 
-	public String firstWorld(StringBuilder s) {
+	public String firstWord(StringBuilder s) {
 		int i = 0;
 		String tmp = "";
 		while (i < s.length()) {
@@ -172,16 +184,18 @@ public class Cesar implements Transcrire {
 		}
 		return tmp;
 	}
-
+	/*
+	 * Teste comme un gros bourrin tout les decalages possible
+	 */
 	public StringBuilder decryptageForceBrute() {
 		int calculDecalage = 0;
-		String firstWorld = firstWorld(str);
+		String firstWorld = firstWord(str);
 		while (calculDecalage < 26) {
 			String sss = decale(firstWorld, calculDecalage);
 			if (isWordInListeMots(listeMots, sss)) {
-				StringBuilder s = dechiffrer(String.valueOf(26-calculDecalage), new StringBuilder(str.toString()));
+				StringBuilder s = dechiffrer(String.valueOf(26-calculDecalage), 
+				new StringBuilder(str.toString()));
 				if (mysplit(s)) {
-					
 					return s;
 				}
 
@@ -191,15 +205,26 @@ public class Cesar implements Transcrire {
 		}
 		return null;
 	}
-
+	
+	
+	/*
+	 * separe les mots par rapport au caractere speciaux
+	 * verifie si ils sont dans le lexique
+	 */
 	private boolean mysplit(StringBuilder s) {
 		String tmp = "";
 		for (int i = 0; i < s.length(); i++) {
+			// teste si le char lu est dans l'alphabet et l'ajoute
 			if (s.charAt(i) >= 'a' && s.charAt(i) <= 'z') {
 				tmp += s.charAt(i);
 			}
-			else if (s.charAt(i) == ' ') {
-				
+			// teste si le char est un apostrophe et reset le string
+			else if(s.charAt(i) == 39){
+				tmp = "";
+			}
+			// teste si le char est un caractere special et essaye de trouver 
+			else if ((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?')) {
+				System.out.println(isWordInListeMots(listeMots,tmp));
 				if (!isWordInListeMots(listeMots,tmp)) {
 					return false;
 				}
