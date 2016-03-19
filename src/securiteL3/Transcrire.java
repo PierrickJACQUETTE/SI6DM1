@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public interface Transcrire {
 
@@ -14,32 +17,20 @@ public interface Transcrire {
 	public StringBuilder dechiffrer(String decalage, StringBuilder strp);
 
 	public default boolean isWordInListeMots(ArrayList<String> listeMots, String motATrouver) {
-		int firstCase = 1;
-		int lastCase = listeMots.size();
+		int firstCase = 0;
+		int lastCase = listeMots.size() - 1;
 		int middleCase;
-		System.out.println("frumentacé".compareTo("frumentacees"));
 
 		while (lastCase >= firstCase) {
 			middleCase = (lastCase + firstCase) / 2;
-			System.out.println("middle case : "+listeMots.get(middleCase)+" case : "+middleCase);
-			if(lastCase == firstCase) {
-				System.out.println(listeMots.get(middleCase));
-				return true;
-			}
 			if (motATrouver.compareTo(listeMots.get(middleCase)) == 0) {
-				System.out.println(listeMots.get(middleCase));
 				return true;
-			}
-			else {
-				System.out.println("mon mot : "+motATrouver+" middle : "+listeMots.get(middleCase));
-				System.out.println("diff : "+motATrouver.compareTo(listeMots.get(middleCase)));
+			} else {
 				if (motATrouver.compareTo(listeMots.get(middleCase)) > 0) {
 					firstCase = middleCase + 1;
-					System.out.println("first case : "+firstCase+" mot : "+listeMots.get(firstCase));
 				} else if (motATrouver.compareTo(listeMots.get(middleCase)) < 0) {
 					lastCase = middleCase - 1;
-					System.out.println("last case : "+lastCase+" mot : "+listeMots.get(lastCase));
-				} 
+				}
 			}
 		}
 
@@ -48,17 +39,15 @@ public interface Transcrire {
 
 	public default ArrayList<String> remplirListe(String filename) {
 		BufferedReader reader = null;
+		Set<String> set = null;
 		ArrayList<String> list = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
+			set = new LinkedHashSet<String>();
 			list = new ArrayList<String>();
 			String line;
-			while ((line = reader.readLine()) != null) {
-				String stringNoAccent = Normalizer.normalize(line, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]",
-						"");
-				list.add(stringNoAccent);
-			}
-			list.trimToSize();
+			while ((line = reader.readLine()) != null)
+				list.add(Normalizer.normalize(line, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", ""));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -69,36 +58,10 @@ public interface Transcrire {
 			}
 		}
 
+		set.addAll(list);
+		list = new ArrayList<String>(set);
+		Collections.sort(list);
+		
 		return list;
-	}
-
-	/*
-	 * public default boolean isInFile(String nameFile, String mot) { File f =
-	 * new File(nameFile); int c; FileInputStream ips; BufferedReader br = null;
-	 * InputStreamReader ipsr = null; try { ips = new FileInputStream(f); ipsr =
-	 * new InputStreamReader(ips); br = new BufferedReader(ipsr); String texte =
-	 * ""; while ((c = br.read()) != -1) { if (c != '\n') { texte += (char) c; }
-	 * else { if (texte.equals(mot)) return true; else texte = ""; } }
-	 * br.close(); } catch (IOException exception) { exception.getStackTrace();
-	 * System.out.println("Erreur lors de la lecture : " +
-	 * exception.getMessage()); }
-	 * 
-	 * return false; }
-	 */
-
-	public default String randomStr(String s, String mot) {
-		String[] tab = s.split(" ");
-		if (tab.length == 1 && tab[0].equals(mot))
-			return null;
-		else if (!tab[0].equals(mot))
-			return tab[0];
-		else {
-			for (int i = 1; i < tab.length; i++) {
-				if (!tab[i].equals(mot))
-					return tab[i];
-			}
-
-			return null;
-		}
 	}
 }

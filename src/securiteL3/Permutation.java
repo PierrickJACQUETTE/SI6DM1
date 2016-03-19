@@ -1,9 +1,8 @@
 package securiteL3;
 
 public class Permutation implements Transcrire {
-
-	StringBuilder str;
-	StringBuilder perm;
+	private StringBuilder str;
+	private StringBuilder perm;
 
 	public Permutation(StringBuilder texte, StringBuilder permutation) {
 		this.str = texte;
@@ -22,7 +21,7 @@ public class Permutation implements Transcrire {
 		return true;
 	}
 
-	private int[] countLetter(StringBuilder ciphertext) {
+	private static int[] countLetter(StringBuilder ciphertext) {
 		int[] nbLettre = new int[26];
 		for (int i = 0; i < 26; i++) {
 			nbLettre[i] = 0;
@@ -35,18 +34,17 @@ public class Permutation implements Transcrire {
 				}
 			}
 		}
+		
 		return nbLettre;
 	}
 
 	public StringBuilder decrypt() {
 		int[] nb = countLetter(this.str);
 		Character maxChar = new Character('a');
-		char[] tabFreq = { 'e', 'a', 's', 'i', 't', 'n', 'r', 'u', 'l', 'o', 'd', 'c', 'p', 'm', 'v', 'q', 'f', 'b',
-				'g', 'h', 'j', 'x', 'y', 'z', 'w', 'k' };
 		char[] res = new char[26];
-		for (int i = 0; i < res.length; i++) {
+		for (int i = 0; i < res.length; i++) 
 			res[i] = 0;
-		}
+		
 		int max = 0;
 		int compteur = 0;
 		for (int j = 0; j < res.length; j++) {
@@ -56,16 +54,17 @@ public class Permutation implements Transcrire {
 					compteur = i;
 				}
 			}
-			res[tabFreq[j] - 97] = (char) (compteur + 'a');
+			res[Constants.TAB_FREQ[j] - 97] = (char) (compteur + 'a');
 			nb[compteur] = 0;
 			max = 0;
 		}
+		
 		StringBuilder resultat = new StringBuilder();
-		for (int i = 0; i < res.length; i++) {
-			// System.out.println(i+ " :"+res[i]);
+		for (int i = 0; i < res.length; i++) 
 			resultat.append(res[i]);
-		}
+		
 		this.perm = resultat;
+		
 		return this.dechiffrer("", resultat);
 	}
 
@@ -75,25 +74,25 @@ public class Permutation implements Transcrire {
 		tabl = perm.toString().toCharArray();
 		for (int i = 0; i < this.str.length(); i++) {
 			char tmp = this.str.charAt(i);
-			if (tmp >= 'a' && tmp <= 'z') {
+			if (tmp >= 'a' && tmp <= 'z') 
 				this.str.setCharAt(i, tabl[tmp - 'a']);
-			}
 		}
+		
 		return this.str;
 	}
 
 	@Override
 	public StringBuilder dechiffrer(String decalage, StringBuilder strp) {
 		char[] tabl = new char[26];
-		for (int i = 0; i < tabl.length; i++) {
+		for (int i = 0; i < tabl.length; i++) 
 			tabl[this.perm.charAt(i) - 'a'] = (char) (i + 'a');
-		}
+		
 		for (int i = 0; i < this.str.length(); i++) {
 			char tmp = this.str.charAt(i);
-			if (tmp >= 'a' && tmp <= 'z') {
+			if (tmp >= 'a' && tmp <= 'z') 
 				this.str.setCharAt(i, tabl[tmp - 'a']);
-			}
 		}
+		
 		return this.str;
 	}
 }

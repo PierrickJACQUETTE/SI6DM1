@@ -1,7 +1,6 @@
 package securiteL3;
 
 public class Vigenere implements Transcrire {
-
 	private StringBuilder str;
 	private StringBuilder motCle;
 
@@ -10,7 +9,7 @@ public class Vigenere implements Transcrire {
 		this.motCle = motCle;
 	}
 
-	private int mostFreq(StringBuilder ciphertext) {
+	private static int mostFreq(StringBuilder ciphertext) {
 		int[] nbLettre = new int[26];
 		int maxCount = 0;
 		char indexOfHighestCount = 0;
@@ -31,17 +30,17 @@ public class Vigenere implements Transcrire {
 				maxCount = nbLettre[i];
 			}
 		}
-		System.out.println("indexOfHighestCount"+ (indexOfHighestCount-4+26)%26);
+		System.out.println("indexOfHighestCount" + (indexOfHighestCount - 4 + 26) % 26);
+
 		return indexOfHighestCount - 4;
 	}
 
 	public StringBuilder decrypter(int longeur) {
 		StringBuilder cle = new StringBuilder();
 		StringBuilder travail = new StringBuilder();
-		for(int i=0;i<this.str.length();i++){
-			if(this.str.charAt(i)>='a'&&this.str.charAt(i)<='z'){
+		for (int i = 0; i < this.str.length(); i++) {
+			if (this.str.charAt(i) >= 'a' && this.str.charAt(i) <= 'z')
 				travail.append(this.str.charAt(i));
-			}
 		}
 		for (int i = 0; i < longeur; i++) {
 			StringBuilder tmp = new StringBuilder();
@@ -55,7 +54,8 @@ public class Vigenere implements Transcrire {
 			cle.append((char) ('a' + res));
 		}
 		System.out.println(cle);
-		this.motCle=cle;
+		this.motCle = cle;
+
 		return this.dechiffrer("", new StringBuilder());
 	}
 
@@ -70,21 +70,20 @@ public class Vigenere implements Transcrire {
 					lettre = this.str.charAt(i);
 					lettreCle = (char) (this.motCle.charAt(j) - 'a');
 					if (lettre >= 'a' && lettre <= 'z') {
-						if (lettre + lettreCle > 'z') {
+						if (lettre + lettreCle > 'z')
 							resultat.append((char) (lettre + lettreCle - 26));
-						} else {
+						else
 							resultat.append((char) (lettre + lettreCle));
-						}
 					} else {
 						resultat.append(lettre);
 						j--;
 					}
-					if (j < this.motCle.length() - 1) {
+					if (j < this.motCle.length() - 1)
 						i++;
-					}
 				}
 			}
 		}
+
 		return resultat;
 	}
 
@@ -99,21 +98,20 @@ public class Vigenere implements Transcrire {
 					lettre = this.str.charAt(i);
 					lettreCle = (char) (this.motCle.charAt(j) - 'a');
 					if (lettre >= 'a' && lettre <= 'z') {
-						if (lettre - lettreCle < 'a') {
+						if (lettre - lettreCle < 'a')
 							resultat.append((char) (lettre - lettreCle + 26));
-						} else {
+						else
 							resultat.append((char) (lettre - lettreCle));
-						}
 					} else {
 						resultat.append(lettre);
 						j--;
 					}
-					if (j < this.motCle.length() - 1) {
+					if (j < this.motCle.length() - 1)
 						i++;
-					}
 				}
 			}
 		}
+		
 		return resultat;
 	}
 }
