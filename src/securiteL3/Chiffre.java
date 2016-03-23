@@ -6,18 +6,29 @@ public class Chiffre {
 	}
 
 	private static void firstArg(String first, String decalage, StringBuilder texte) {
+		long startTime;
+		long endTime;
 		switch (first) {
 		case "c":
 			Cesar c = new Cesar(texte, decalage);
+			startTime = System.currentTimeMillis();
 			System.out.println(c.chiffrer());
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de chiffrage de cesar : "+(endTime-startTime)+" ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder(decalage));
+			startTime = System.currentTimeMillis();
 			System.out.println(p.chiffrer());
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de chiffrage de permutation : "+(endTime-startTime)+" ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
+			startTime = System.currentTimeMillis();
 			System.out.println(v.chiffrer());
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de chiffrage de vigenere : "+(endTime-startTime)+" ms.");
 			break;
 		default:
 		}

@@ -6,18 +6,29 @@ public class Dechiffre {
 	}
 
 	private static void firstArg(String first, StringBuilder texte, String decalage) {
+		long startTime;
+		long endTime;
 		switch (first) {
 		case "c":
 			Cesar c = new Cesar(texte);
+			startTime = System.currentTimeMillis();
 			System.out.println(c.dechiffrer(decalage, texte));
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de dechiffrage de cesar : "+(endTime-startTime)+" ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder(decalage));
+			startTime = System.currentTimeMillis();
 			System.out.println(p.dechiffrer("ferfref", new StringBuilder("zef")));
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de dechiffrage de permutation : "+(endTime-startTime)+" ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
+			startTime = System.currentTimeMillis();
 			System.out.println(v.dechiffrer("ferfref", new StringBuilder("zef")));
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de dechiffrage de vigenre : "+(endTime-startTime)+" ms.");
 			break;
 		default:
 

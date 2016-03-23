@@ -6,22 +6,33 @@ public class Decrypt {
 	}
 
 	private static void firstArg(String first, String mot, StringBuilder texte, String methode) {
+		long startTime;
+		long endTime;
 		switch (first) {
 		case "c":
 			Cesar c = new Cesar(texte);
 			c.setMethode(Integer.parseInt(methode));
 			if (mot != null)
 				c.setMotTest(mot);
-
+			startTime = System.currentTimeMillis();
 			System.out.println(c.decrypter());
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de decryptage de cesar : "+(endTime-startTime)+" ms.");
+			
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder());
+			startTime = System.currentTimeMillis();
 			System.out.println(p.decrypt());
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de decryptage de permutation : "+(endTime-startTime)+" ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(methode));
+			startTime = System.currentTimeMillis();
 			System.out.println(v.decrypter(Integer.parseInt(methode)));
+			endTime = System.currentTimeMillis();
+			System.err.println("Temps de decryptage de vigenere : "+(endTime-startTime)+" ms.");
 			break;
 		default:
 
@@ -29,6 +40,7 @@ public class Decrypt {
 	}
 
 	public static void main(String[] arg) {
+		
 		if (arg.length < 2) {
 			System.err.println(arg.length);
 			System.err.println("Il manque des arguments");
@@ -55,5 +67,6 @@ public class Decrypt {
 		} else {
 			firstArg(arg[0], null, Util.lowerCase(Util.removeAccentLower(texte)), method);
 		}
+
 	}
 }
