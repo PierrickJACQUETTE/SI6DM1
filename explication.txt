@@ -1,0 +1,27 @@
+Vigenere
+
+Pour le chiffrement et le déchiffrement, je connais le mot clé. Je parcours en paralléle le mot clé et le texte pour créer le texte chiffré au passage. Cela ne permet de ne pas appliquer le chiffrement et le déchiffrement sur les caractéres spéciaux ou les espaces mais de les conserver.
+Pour le décryptage, je connais la longeur du mot clé. Cela me permet d'étudier la fréquences dans les sous chaînes. Je récupére donc des sosus-chaines où j'analyse la fréquence de chaque sous-chaine, ce qui me permet de connaître quelle est le caractère pour décrypter. Une fois la clé trouvé. J'applique la fonction de déchiffrement sur le texte avec la clé que je viens de calculer.
+Le chiffre de Vigénère est un cas particulier du chiffre de César où la taille de la clef peut être supérieur à un. Utilisé la force brut pour casser ce code serait trop longue 26^26 possibilités.
+
+
+Permutation 
+
+Pour le chiffrement et le déchiffrement, je connais la permutation. A chaque caractère du texte qui est compris entre 'a' et 'z', j'applique la permutation que je connais. Pour le déchiffrement, j'applique la permutation inverse.
+Pour le décryptage, je compte le nombre de chaque lettre dans le texte puis je me base sur la fréquence des lettres francaises (e,a,s,i ...). J'en déduis la permutation puis j'applique la fonction de déchiffrement, cela me donne un déchiffrement partiel. Les fréquences de certaines lettres sont assez proches par conséquent identifier la bonne permutation est complexe.
+
+Chiffre c nombre fichier
+Chiffre v motCle fichier
+Chiffre p permutation fichier
+
+Dechiffre c nombre fichier
+Dechiffre v motCle fichier
+Dechiffre p permutation fichier
+
+Decrypt c fichier 1 //mot
+Decrypt c fichier 2 //frequence
+Decrypt c fichier 3 //force brut
+Decrypt v fichier tailleMotCle
+Decrypt p fichier 
+
+
