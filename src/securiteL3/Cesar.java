@@ -53,7 +53,6 @@ public class Cesar implements Transcrire {
 		// boucle for qui teste les codages du mot cle
 		for (int i = 0; i <= 25; i++) {
 			test = decale(motTest, i); // decale le motTest au decalage i
-			System.out.println(motTest + " = " + test);
 			int j = 0, k = 0, c = 0;
 			// boucle while qui regarde si le mot cle est present dans le texte
 			// s'arrete si trouve == true ou si on a atteint la fin du texte
@@ -67,14 +66,12 @@ public class Cesar implements Transcrire {
 					// cle
 					if (strTemp.charAt(j) == test.charAt(k) && !(c > test.length())) {
 						k++;
-						System.out.println("test : " + k + " " + j + " " + c);
 						// teste si le mot en traitement est aussi long que le
 						// mot cle
 						if (k == test.length() && k == c) {
 							deca += i; // current decalage de teste
 							strTemp = dechiffrer(deca, strTemp); // dechiffre le
 																	// texte
-							System.out.println(strTemp);
 							correct = mySplit(strTemp); // teste si le teste est
 														// en francais
 							if (correct)
@@ -196,8 +193,8 @@ public class Cesar implements Transcrire {
 				tmp = "";
 			}
 			// teste si le char est un caractere special et essaye de trouver
-			else if ((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?')) {
-				System.out.println(Util.isWordInListeMots(Util.getListeMots(), tmp));
+			else if (((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?')) 
+					& !tmp.equals("") & s.charAt(i) != 39) {
 				if (!Util.isWordInListeMots(Util.getListeMots(), tmp)) {
 					return false;
 				}
