@@ -2,8 +2,9 @@ package securiteL3;
 
 public class Dechiffre {
 
-	private Dechiffre() {}
-	
+	private Dechiffre() {
+	}
+
 	private static void firstArg(String first, StringBuilder texte, String decalage) {
 		switch (first) {
 		case "c":
@@ -39,10 +40,12 @@ public class Dechiffre {
 			System.err.println("Le fichier est vide");
 			return;
 		}
+
+		Util.chargerLexique(Constants.LEXIQUE);
 		if (arg.length == 4) {
 			String mot = arg[3];
 			firstArg(arg[0], Util.lowerCase(texte), decalage);
-		} else 
+		} else
 			firstArg(arg[0], Util.lowerCase(Util.removeAccentLower(texte)), decalage);
 	}
 }

@@ -34,7 +34,7 @@ public class Permutation implements Transcrire {
 				}
 			}
 		}
-		
+
 		return nbLettre;
 	}
 
@@ -42,9 +42,9 @@ public class Permutation implements Transcrire {
 		int[] nb = countLetter(this.str);
 		Character maxChar = new Character('a');
 		char[] res = new char[26];
-		for (int i = 0; i < res.length; i++) 
+		for (int i = 0; i < res.length; i++)
 			res[i] = 0;
-		
+
 		int max = 0;
 		int compteur = 0;
 		for (int j = 0; j < res.length; j++) {
@@ -58,13 +58,13 @@ public class Permutation implements Transcrire {
 			nb[compteur] = 0;
 			max = 0;
 		}
-		
+
 		StringBuilder resultat = new StringBuilder();
-		for (int i = 0; i < res.length; i++) 
+		for (int i = 0; i < res.length; i++)
 			resultat.append(res[i]);
-		
+
 		this.perm = resultat;
-		
+
 		return this.dechiffrer("", resultat);
 	}
 
@@ -74,25 +74,25 @@ public class Permutation implements Transcrire {
 		tabl = perm.toString().toCharArray();
 		for (int i = 0; i < this.str.length(); i++) {
 			char tmp = this.str.charAt(i);
-			if (tmp >= 'a' && tmp <= 'z') 
+			if (tmp >= 'a' && tmp <= 'z')
 				this.str.setCharAt(i, tabl[tmp - 'a']);
 		}
-		
+
 		return this.str;
 	}
 
 	@Override
 	public StringBuilder dechiffrer(String decalage, StringBuilder strp) {
 		char[] tabl = new char[26];
-		for (int i = 0; i < tabl.length; i++) 
+		for (int i = 0; i < tabl.length; i++)
 			tabl[this.perm.charAt(i) - 'a'] = (char) (i + 'a');
-		
+
 		for (int i = 0; i < this.str.length(); i++) {
 			char tmp = this.str.charAt(i);
-			if (tmp >= 'a' && tmp <= 'z') 
+			if (tmp >= 'a' && tmp <= 'z')
 				this.str.setCharAt(i, tabl[tmp - 'a']);
 		}
-		
+
 		return this.str;
 	}
 }

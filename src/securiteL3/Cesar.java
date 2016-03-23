@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cesar implements Transcrire {
-	private static ArrayList<String> listeMots;
 	private StringBuilder str;
 	private int decalage;
 	private int methode;
@@ -13,12 +12,10 @@ public class Cesar implements Transcrire {
 	public Cesar(StringBuilder str, String decalage) {
 		this.str = str;
 		this.decalage = Integer.parseInt(decalage) % 26;
-		listeMots = remplirListe("lexique.txt");
 	}
 
 	public Cesar(StringBuilder str) {
 		this.str = str;
-		listeMots = remplirListe("lexique.txt");
 	}
 
 	public void setMotTest(String mot) {
@@ -172,7 +169,7 @@ public class Cesar implements Transcrire {
 		String firstWorld = firstWord(str);
 		while (calculDecalage < 26) {
 			String s1 = decale(firstWorld, calculDecalage);
-			if (isWordInListeMots(listeMots, s1)) {
+			if (Util.isWordInListeMots(Util.getListeMots(), s1)) {
 				StringBuilder s2 = dechiffrer(String.valueOf(26 - calculDecalage), new StringBuilder(str.toString()));
 				if (mySplit(s2))
 					return s2;
@@ -200,8 +197,8 @@ public class Cesar implements Transcrire {
 			}
 			// teste si le char est un caractere special et essaye de trouver
 			else if ((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?')) {
-				System.out.println(isWordInListeMots(listeMots, tmp));
-				if (!isWordInListeMots(listeMots, tmp)) {
+				System.out.println(Util.isWordInListeMots(Util.getListeMots(), tmp));
+				if (!Util.isWordInListeMots(Util.getListeMots(), tmp)) {
 					return false;
 				}
 				tmp = "";
