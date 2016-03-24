@@ -27,11 +27,25 @@ public class Decrypt {
 			System.err.println("Temps de decryptage de permutation : " + (endTime - startTime) + " ms.");
 			break;
 		case "v":
-			Vigenere v = new Vigenere(texte, new StringBuilder(methode));
-			startTime = System.currentTimeMillis();
-			System.out.println(v.decrypter(Integer.parseInt(methode)));
-			endTime = System.currentTimeMillis();
-			System.err.println("Temps de decryptage de vigenere : " + (endTime - startTime) + " ms.");
+			if (methode.equals("1") && mot != null) {
+				Vigenere v = new Vigenere(texte, new StringBuilder(mot));
+				startTime = System.currentTimeMillis();
+				System.out.println(v.decrypter(Integer.parseInt(mot)));
+				endTime = System.currentTimeMillis();
+				System.err.println(
+						"Temps de decryptage de vigenere AVEC la longeur de cle: " + (endTime - startTime) + " ms.");
+			}
+			else if (methode.equals("2")) {
+				StringBuilder texte2 = Util.suppAZ(texte);
+				Vigenere2 v2 = new Vigenere2(texte);
+				startTime = System.currentTimeMillis();
+				System.out.println((v2.trouveLengthCle(texte2, 11).cle));
+				endTime = System.currentTimeMillis();
+				System.err.println("Temps de decryptage de vigenere SANS la longueur de la cle: "
+						+ (endTime - startTime) + " ms.");
+			} else {
+				System.out.println("Methode non reconnue");
+			}
 			break;
 		default:
 			System.err.println("Systeme de decryptage inconnu");
@@ -50,7 +64,7 @@ public class Decrypt {
 			return;
 		}
 		String method = null;
-		if (arg.length == 3)
+		if (arg.length >= 3)
 			method = arg[2];
 		StringBuilder texte = Util.lire(arg[1]);
 		if (texte == null) {

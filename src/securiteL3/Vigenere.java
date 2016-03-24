@@ -1,7 +1,7 @@
 package securiteL3;
 
 public class Vigenere implements Transcrire {
-	private StringBuilder str;
+	protected StringBuilder str;
 	private StringBuilder motCle;
 
 	public Vigenere(StringBuilder str, StringBuilder motCle) {
@@ -54,9 +54,12 @@ public class Vigenere implements Transcrire {
 			char res = (char) ((lettreMostFreq + 26) % 26);
 			cle.append((char) ('a' + res));
 		}
-		// System.out.println(cle);
+		//System.out.println(cle);
 		this.motCle = cle;
-
+		if(this instanceof Vigenere2){
+			Vigenere v = new Vigenere(this.str, this.motCle);
+			return v.dechiffrer("", new StringBuilder());
+		}
 		return this.dechiffrer("", new StringBuilder());
 	}
 
@@ -90,6 +93,7 @@ public class Vigenere implements Transcrire {
 
 	@Override
 	public StringBuilder dechiffrer(String decalage, StringBuilder strp) {
+	//	System.out.println("entrer dechiffrer "+this.str);
 		StringBuilder resultat = new StringBuilder();
 		char lettre = 0;
 		char lettreCle = 0;

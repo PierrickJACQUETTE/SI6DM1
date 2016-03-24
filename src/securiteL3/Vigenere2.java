@@ -1,9 +1,9 @@
 package securiteL3;
 
-public class Vigenere2 implements Transcrire {
+public class Vigenere2 extends Vigenere implements Transcrire {
 
-	public Vigenere2() {
-
+	public Vigenere2(StringBuilder str) {
+		super(str, null);
 	}
 
 	/**
@@ -17,8 +17,8 @@ public class Vigenere2 implements Transcrire {
 		char c;
 		for (int i = 0; i < str.length(); i++) {
 			c = str.charAt(i);
-			if (c <= 'Z' && c >= 'A') {
-				tabOccurence[c - 'A']++;
+			if (c <= 'z' && c >= 'a') {
+				tabOccurence[c - 'a']++;
 			}
 		}
 
@@ -47,7 +47,7 @@ public class Vigenere2 implements Transcrire {
 			while (cpt < i + 1) {
 				while (j < str.length()) {
 					c = str.charAt(j);
-					if (c <= 'Z' && c >= 'A')
+					if (c <= 'z' && c >= 'a')
 						strTmp.append(c);
 
 					j += (i + 1);
@@ -70,18 +70,16 @@ public class Vigenere2 implements Transcrire {
 		return tabFinalIndice;
 	}
 
-	private static CoupleCleIndice trouveLengthCle(StringBuilder str, int n) {
+	public CoupleCleIndice trouveLengthCle(StringBuilder str, int n) {
 		double tab[] = listeIndices(str, n);
+		for (int i = 0; i < tab.length; i++) {
+			System.out.println("i : " + tab[i]);
+		}
 		for (int i = 0; i < tab.length; i++) {
 			if (Double.compare(tab[i], Constants.SEUIL) > 0)
 				return new CoupleCleIndice(i + 1, tab[i]);
 		}
-
 		return new CoupleCleIndice(0, 0);
-	}
-	
-	private static void analyseFrequentielle() {
-		
 	}
 
 	@Override
@@ -95,24 +93,12 @@ public class Vigenere2 implements Transcrire {
 	}
 
 	static class CoupleCleIndice {
-		private int cle;
+		protected int cle;
 		private double indice;
 
 		public CoupleCleIndice(int cle, double indice) {
 			this.cle = cle;
 			this.indice = indice;
 		}
-	}
-
-	public static void main(String[] args) {
-		StringBuilder texte = Util.lire("coincidence.txt");
-		int[] tab = occurenceLettres(texte);
-		double[] tablo = listeIndices(texte, 12);
-		for(int i = 0; i < tablo.length; i++) {
-			System.out.println(tablo[i]);
-		}
-		System.out.println(indiceCoincidence(texte));
-		System.out.println(
-				"longueur cle : " + trouveLengthCle(texte, 11).cle + " : " + trouveLengthCle(texte, 11).indice);
 	}
 }

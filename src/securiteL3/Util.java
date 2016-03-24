@@ -116,4 +116,15 @@ public class Util {
 	public static void chargerLexique(String filename) {
 		listeMots = remplirListe(filename);
 	}
+
+	public static StringBuilder suppAZ(StringBuilder tmp) {
+		StringBuilder resultat = new StringBuilder();
+		for (int i = 0; i < tmp.length(); i++) {
+			char c = tmp.charAt(i);
+			if (c >= 'a' && c <= 'z')
+				resultat.append(c);
+		}
+
+		return resultat;
+	}
 }
