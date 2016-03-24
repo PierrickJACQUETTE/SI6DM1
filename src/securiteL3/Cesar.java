@@ -1,6 +1,5 @@
 package securiteL3;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Cesar implements Transcrire {
@@ -143,21 +142,6 @@ public class Cesar implements Transcrire {
 		return null;
 	}
 
-	private static String firstWord(StringBuilder s) {
-		int i = 0;
-		String tmp = "";
-		while (i < s.length()) {
-			if (s.charAt(i) != ' ')
-				tmp += s.charAt(i);
-			else
-				return tmp;
-
-			i++;
-		}
-
-		return tmp;
-	}
-
 	/*
 	 * Teste comme un gros bourrin tout les decalages possible
 	 */
@@ -176,6 +160,21 @@ public class Cesar implements Transcrire {
 
 		return null;
 	}
+	
+	private static String firstWord(StringBuilder s) {
+		int i = 0;
+		String tmp = "";
+		while (i < s.length()) {
+			if (s.charAt(i) != ' ')
+				tmp += s.charAt(i);
+			else
+				return tmp;
+
+			i++;
+		}
+
+		return tmp;
+	}
 
 	/*
 	 * separe les mots par rapport au caractere speciaux verifie si ils sont
@@ -193,7 +192,7 @@ public class Cesar implements Transcrire {
 				tmp = "";
 			}
 			// teste si le char est un caractere special et essaye de trouver
-			else if (((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?')) 
+			else if (((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?'))
 					& !tmp.equals("") & s.charAt(i) != 39) {
 				if (!Util.isWordInListeMots(Util.getListeMots(), tmp)) {
 					return false;

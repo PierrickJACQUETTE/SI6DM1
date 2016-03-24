@@ -14,24 +14,25 @@ public class Dechiffre {
 			startTime = System.currentTimeMillis();
 			System.out.println(c.dechiffrer(decalage, texte));
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de dechiffrage de cesar : "+(endTime-startTime)+" ms.");
+			System.err.println("Temps de dechiffrage de cesar : " + (endTime - startTime) + " ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder(decalage));
 			startTime = System.currentTimeMillis();
 			System.out.println(p.dechiffrer("ferfref", new StringBuilder("zef")));
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de dechiffrage de permutation : "+(endTime-startTime)+" ms.");
+			System.err.println("Temps de dechiffrage de permutation : " + (endTime - startTime) + " ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
 			startTime = System.currentTimeMillis();
 			System.out.println(v.dechiffrer("ferfref", new StringBuilder("zef")));
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de dechiffrage de vigenre : "+(endTime-startTime)+" ms.");
+			System.err.println("Temps de dechiffrage de vigenre : " + (endTime - startTime) + " ms.");
 			break;
 		default:
-
+			System.err.println("Systeme de dechiffrage inconnu");
+			return;
 		}
 	}
 
@@ -54,7 +55,6 @@ public class Dechiffre {
 
 		Util.chargerLexique(Constants.LEXIQUE);
 		if (arg.length == 4) {
-			String mot = arg[3];
 			firstArg(arg[0], Util.lowerCase(texte), decalage);
 		} else
 			firstArg(arg[0], Util.lowerCase(Util.removeAccentLower(texte)), decalage);

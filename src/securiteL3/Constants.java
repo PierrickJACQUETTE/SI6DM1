@@ -4,6 +4,8 @@ public final class Constants {
 
 	private Constants() {
 	}
+	
+	public static final double SEUIL = 0.068;
 
 	public static final String LEXIQUE = "lexique.txt";
 

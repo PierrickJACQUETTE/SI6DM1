@@ -17,30 +17,29 @@ public class Decrypt {
 			startTime = System.currentTimeMillis();
 			System.out.println(c.decrypter());
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de decryptage de cesar : "+(endTime-startTime)+" ms.");
-			
+			System.err.println("Temps de decryptage de cesar : " + (endTime - startTime) + " ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder());
 			startTime = System.currentTimeMillis();
 			System.out.println(p.decrypt());
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de decryptage de permutation : "+(endTime-startTime)+" ms.");
+			System.err.println("Temps de decryptage de permutation : " + (endTime - startTime) + " ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(methode));
 			startTime = System.currentTimeMillis();
 			System.out.println(v.decrypter(Integer.parseInt(methode)));
 			endTime = System.currentTimeMillis();
-			System.err.println("Temps de decryptage de vigenere : "+(endTime-startTime)+" ms.");
+			System.err.println("Temps de decryptage de vigenere : " + (endTime - startTime) + " ms.");
 			break;
 		default:
-
+			System.err.println("Systeme de decryptage inconnu");
+			return;
 		}
 	}
 
 	public static void main(String[] arg) {
-		
 		if (arg.length < 2) {
 			System.err.println(arg.length);
 			System.err.println("Il manque des arguments");
@@ -51,9 +50,8 @@ public class Decrypt {
 			return;
 		}
 		String method = null;
-		if (arg.length == 3) {
+		if (arg.length == 3)
 			method = arg[2];
-		}
 		StringBuilder texte = Util.lire(arg[1]);
 		if (texte == null) {
 			System.err.println("Le fichier est vide");
@@ -64,9 +62,7 @@ public class Decrypt {
 		if (arg.length == 4) {
 			String mot = arg[3];
 			firstArg(arg[0], mot, Util.lowerCase(texte), method);
-		} else {
+		} else
 			firstArg(arg[0], null, Util.lowerCase(Util.removeAccentLower(texte)), method);
-		}
-
 	}
 }

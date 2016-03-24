@@ -37,7 +37,7 @@ public class Util {
 			}
 		} catch (IOException exception) {
 			exception.getStackTrace();
-			System.out.println("Erreur lors de la lecture : " + exception.getMessage());
+			System.err.println("Erreur lors de la lecture : " + exception.getMessage());
 		} finally {
 			try {
 				br.close();

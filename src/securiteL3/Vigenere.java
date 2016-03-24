@@ -30,7 +30,8 @@ public class Vigenere implements Transcrire {
 				maxCount = nbLettre[i];
 			}
 		}
-		//System.out.println("indexOfHighestCount" + (indexOfHighestCount - 4 + 26) % 26);
+		// System.out.println("indexOfHighestCount" + (indexOfHighestCount - 4 +
+		// 26) % 26);
 
 		return indexOfHighestCount - 4;
 	}
@@ -53,7 +54,7 @@ public class Vigenere implements Transcrire {
 			char res = (char) ((lettreMostFreq + 26) % 26);
 			cle.append((char) ('a' + res));
 		}
-		//System.out.println(cle);
+		// System.out.println(cle);
 		this.motCle = cle;
 
 		return this.dechiffrer("", new StringBuilder());
@@ -111,7 +112,7 @@ public class Vigenere implements Transcrire {
 				}
 			}
 		}
-		
+
 		return resultat;
 	}
 }
