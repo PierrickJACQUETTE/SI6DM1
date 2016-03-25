@@ -12,21 +12,21 @@ public class Chiffre {
 		case "c":
 			Cesar c = new Cesar(texte, decalage);
 			startTime = System.currentTimeMillis();
-			System.out.println(c.chiffrer());
+			System.out.print(c.chiffrer());
 			endTime = System.currentTimeMillis();
 			System.err.println("Temps de chiffrage de cesar : " + (endTime - startTime) + " ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder(decalage));
 			startTime = System.currentTimeMillis();
-			System.out.println(p.chiffrer());
+			System.out.print(p.chiffrer());
 			endTime = System.currentTimeMillis();
 			System.err.println("Temps de chiffrage de permutation : " + (endTime - startTime) + " ms.");
 			break;
 		case "v":
 			Vigenere v = new Vigenere(texte, new StringBuilder(decalage));
 			startTime = System.currentTimeMillis();
-			System.out.println(v.chiffrer());
+			System.out.print(v.chiffrer());
 			endTime = System.currentTimeMillis();
 			System.err.println("Temps de chiffrage de vigenere : " + (endTime - startTime) + " ms.");
 			break;

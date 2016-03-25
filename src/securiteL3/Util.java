@@ -90,7 +90,7 @@ public class Util {
 		Set<String> set = null;
 		ArrayList<String> list = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader((new FileInputStream(filename),"ISO-8859-15"));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"ISO-8859-15"));
 			set = new LinkedHashSet<String>();
 			list = new ArrayList<String>();
 			String line;

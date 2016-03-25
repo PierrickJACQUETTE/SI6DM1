@@ -56,10 +56,6 @@ public class Vigenere implements Transcrire {
 		}
 		//System.out.println(cle);
 		this.motCle = cle;
-		if(this instanceof Vigenere2){
-			Vigenere v = new Vigenere(this.str, this.motCle);
-			return v.dechiffrer("", new StringBuilder());
-		}
 		return this.dechiffrer("", new StringBuilder());
 	}
 

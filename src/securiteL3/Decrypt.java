@@ -15,14 +15,14 @@ public class Decrypt {
 			if (mot != null)
 				c.setMotTest(mot);
 			startTime = System.currentTimeMillis();
-			System.out.println(c.decrypter());
+			System.out.print(c.decrypter());
 			endTime = System.currentTimeMillis();
 			System.err.println("Temps de decryptage de cesar : " + (endTime - startTime) + " ms.");
 			break;
 		case "p":
 			Permutation p = new Permutation(texte, new StringBuilder());
 			startTime = System.currentTimeMillis();
-			System.out.println(p.decrypt());
+			System.out.print(p.decrypt());
 			endTime = System.currentTimeMillis();
 			System.err.println("Temps de decryptage de permutation : " + (endTime - startTime) + " ms.");
 			break;
@@ -30,7 +30,7 @@ public class Decrypt {
 			if (methode.equals("1") && mot != null) {
 				Vigenere v = new Vigenere(texte, new StringBuilder(mot));
 				startTime = System.currentTimeMillis();
-				System.out.println(v.decrypter(Integer.parseInt(mot)));
+				System.out.print(v.decrypter(Integer.parseInt(mot)));
 				endTime = System.currentTimeMillis();
 				System.err.println(
 						"Temps de decryptage de vigenere AVEC la longeur de cle: " + (endTime - startTime) + " ms.");
@@ -39,7 +39,8 @@ public class Decrypt {
 				StringBuilder texte2 = Util.suppAZ(texte);
 				Vigenere2 v2 = new Vigenere2(texte);
 				startTime = System.currentTimeMillis();
-				System.out.println((v2.trouveLengthCle(texte2, 11).cle));
+				Vigenere v = new Vigenere(texte,null);
+				System.out.print(v.decrypter(v2.trouveLengthCle(texte2, 11).cle));
 				endTime = System.currentTimeMillis();
 				System.err.println("Temps de decryptage de vigenere SANS la longueur de la cle: "
 						+ (endTime - startTime) + " ms.");

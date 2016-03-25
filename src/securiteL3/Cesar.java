@@ -98,7 +98,6 @@ public class Cesar implements Transcrire {
 	}
 
 	public StringBuilder decryptageFrequence() {
-		System.out.println(str);
 		int maxFreq = 0;
 		int freqChar = 0;
 		Character maxChar = new Character('a');

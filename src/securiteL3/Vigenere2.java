@@ -72,10 +72,10 @@ public class Vigenere2 extends Vigenere implements Transcrire {
 
 	public CoupleCleIndice trouveLengthCle(StringBuilder str, int n) {
 		double tab[] = listeIndices(str, n);
-		for (int i = 0; i < tab.length; i++) {
+	/*	for (int i = 0; i < tab.length; i++) {
 			System.out.println("i : " + tab[i]);
 		}
-		for (int i = 0; i < tab.length; i++) {
+	*/	for (int i = 0; i < tab.length; i++) {
 			if (Double.compare(tab[i], Constants.SEUIL) > 0)
 				return new CoupleCleIndice(i + 1, tab[i]);
 		}
