@@ -1,9 +1,13 @@
+echo le fichier traite est $1
+head -1 $1
+
 java securiteL3.Chiffre c 15 $1> $1.cesar
 java securiteL3.Dechiffre c 15 $1.cesar >$1.cesar.clair
 if diff $1 $1.cesar.clair >&2
 then echo Cesar réussi
 else echo Cesar raté
 fi
+
 
 java securiteL3.Chiffre p "nbvcxwmlkjhgfdsqpoiuytreza" $1> $1.perm
 java securiteL3.Dechiffre p "nbvcxwmlkjhgfdsqpoiuytreza" $1.perm > $1.perm.clair
@@ -20,7 +24,7 @@ else echo chiffre Vigenère raté
 fi
 
 echo decrypt cesar
-java securiteL3.Decrypt c $1.cesar 1 decouvre >$1.clair
+java securiteL3.Decrypt c $1.cesar 1 eblouissant >$1.clair
 if diff $1 $1.clair  >&2
 then echo decrypt cesar mode 1 réussi
 else echo decrypt cesar mode 1 raté
