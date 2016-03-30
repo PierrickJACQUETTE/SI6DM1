@@ -71,7 +71,7 @@ public class Cesar implements Transcrire {
 							deca += i; // current decalage de teste
 							strTemp = dechiffrer(deca, strTemp); // dechiffre le
 																		// texte
-							System.out.println("WTF :"+strTemp);
+							//System.out.println("WTF :"+strTemp);
 							correct = mySplit(strTemp); // teste si le teste est
 														// en francais
 							if (correct)
@@ -195,7 +195,7 @@ public class Cesar implements Transcrire {
 			else if (
 			((s.charAt(i) >= ' ' && s.charAt(i) <= '.') || (s.charAt(i) >= ':' && s.charAt(i) <= '?') || (s.charAt(i) == 10))
 					& !tmp.equals("") & s.charAt(i) != 39) {
-					System.out.println(tmp+" = "+Util.isWordInListeMots(Util.getListeMots(), tmp));
+					//System.out.println(tmp+" = "+Util.isWordInListeMots(Util.getListeMots(), tmp));
 				if (!Util.isWordInListeMots(Util.getListeMots(), tmp)) {
 					return false;
 				}
