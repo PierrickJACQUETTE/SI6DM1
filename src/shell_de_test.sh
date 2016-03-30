@@ -27,22 +27,22 @@ fi
 echo "\n"
 
 echo decrypt cesar
-java securiteL3.Decrypt c $1.cesar 1 pays >$1.clair1
+java securiteL3.Decrypt c $1.cesar 1 ange >$1.clair1
 if diff $1 $1.clair1  >&2
 then echo decrypt cesar mode 1 réussi
 else echo decrypt cesar mode 1 raté
 fi
 echo "\n"
 
-java securiteL3.Decrypt c $1.cesar 2 >$1.clair
-if diff $1 $1.clair >&2
+java securiteL3.Decrypt c $1.cesar 2 >$1.clair2
+if diff $1 $1.clair2 >&2
 then echo decrypt cesar mode 2 réussi
 else echo decrypt cesar mode 2 raté
 fi
 echo "\n"
 
-java securiteL3.Decrypt c $1.cesar 3 >$1.clair
-if diff $1 $1.clair >&2
+java securiteL3.Decrypt c $1.cesar 3 >$1.clair3
+if diff $1 $1.clair3 >&2
 then echo decrypt cesar mode 3 réussi
 else echo decrypt cesar mode 3 raté
 fi
